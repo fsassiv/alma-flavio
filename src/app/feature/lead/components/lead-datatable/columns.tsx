@@ -3,7 +3,7 @@
 import { handleRequest } from '@/lib/utils';
 import { ColumnDef } from '@tanstack/react-table';
 import axios from 'axios';
-import { Button } from '../ui/button';
+import { Button } from '../../../../../components/ui/button';
 import { LeadType } from './types';
 import { capitalize } from './utils';
 

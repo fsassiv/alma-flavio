@@ -1,4 +1,4 @@
-import { LeadDataTable } from '@/components/lead-datatable';
+import { LeadDataTable } from '@/app/feature/lead/components/lead-datatable';
 import { SideBar } from '@/components/sidebar';
 import { handleRequest } from '@/lib/utils';
 import axios from 'axios';
