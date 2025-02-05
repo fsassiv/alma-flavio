@@ -30,7 +30,7 @@ export const LeadErrorDialog: FC<LeadErrorDialogProps> = ({
           </div>
         </AlertDialogHeader>
         <AlertDialogFooter className="flex !justify-center">
-          <AlertDialogAction onClick={() => closeDialog}>
+          <AlertDialogAction onClick={() => closeDialog()}>
             Close
           </AlertDialogAction>
         </AlertDialogFooter>

@@ -23,7 +23,10 @@ model Lead {
   personalUrl          String
   visaInterest         String
   message              String
-  status               String   @default("PENDING ")
+  status               String   @default("PENDING")
+  userCV               Bytes
+  userCVName           String
+  userCVType           String
 
   @@map("leads")
 }

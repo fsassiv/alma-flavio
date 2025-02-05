@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
@@ -46,6 +46,13 @@ const formSchema = z.object({
   personalUrl: z.string().url({
     message: 'Please enter a valid url address.',
   }),
+  userCV: z.instanceof(File).refine(
+    (file) => {
+      const ext = file.name.split('.').pop()?.toLowerCase();
+      return ['pdf', 'doc', 'docx'].includes(ext || '');
+    },
+    { message: 'Only PDF, DOC, or DOCX files are allowed' }
+  ),
   visaInterest: z
     .array(z.string())
     .min(1, { message: 'Please select at least one visa interest.' }),
@@ -66,13 +73,23 @@ export const LeadForm: FC<LeadFormProps> = ({
   });
 
   const onSubmit = async (lead: z.infer<typeof formSchema>) => {
-    const formatedLead = {
-      ...lead,
-      visaInterest: lead.visaInterest.join(', '),
-    };
+    const formData = new FormData();
+
+    formData.append('userCV', lead.userCV);
+    formData.append('visaInterest', lead.visaInterest.join(', '));
+    formData.append('firstName', lead.firstName);
+    formData.append('lastName', lead.lastName);
+    formData.append('email', lead.email);
+    formData.append('countryOfCitizenship', lead.countryOfCitizenship);
+    formData.append('personalUrl', lead.personalUrl);
+    formData.append('message', lead.message);
 
     const [error, response] = await handleRequest(
-      axios.post('/api/lead', formatedLead)
+      axios.post('/api/lead', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
     );
 
     if (error) {
@@ -160,6 +177,24 @@ export const LeadForm: FC<LeadFormProps> = ({
               </FormControl>
               <FormMessage />
             </FormItem>
+          )}
+        />
+        <Controller
+          name="userCV"
+          control={form.control}
+          defaultValue={undefined}
+          render={({ field: { onChange, ref } }) => (
+            <Input
+              type="file"
+              accept=".pdf, .doc, .docx"
+              ref={ref}
+              onChange={(e) => {
+                // Ensure we're sending the File object to the form
+                if (e.target.files && e.target.files.length > 0) {
+                  onChange(e.target.files[0]);
+                }
+              }}
+            />
           )}
         />
         <Dice5 className="mx-auto text-purple-500 w-[60px] h-[60px] mb-1" />

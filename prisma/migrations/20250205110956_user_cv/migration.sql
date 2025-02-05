@@ -8,7 +8,9 @@ CREATE TABLE "leads" (
     "countryOfCitizenship" TEXT NOT NULL,
     "personalUrl" TEXT NOT NULL,
     "visaInterest" TEXT NOT NULL,
-    "message" TEXT NOT NULL
+    "message" TEXT NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'PENDING',
+    "userCV" BLOB NOT NULL
 );
 
 -- CreateIndex
