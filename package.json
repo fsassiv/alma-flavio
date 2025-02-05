@@ -6,6 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
+    "test:changed": "jest --onlyChanged",
+    "test": "jest --watch",
     "lint": "next lint"
   },
   "dependencies": {
@@ -20,7 +22,6 @@
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "formidable": "^3.5.2",
     "lucide-react": "^0.474.0",
     "next": "15.1.6",
     "next-auth": "^4.24.11",
@@ -32,11 +33,15 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.26.7",
+    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.26.0",
     "@eslint/eslintrc": "^3",
-    "@types/formidable": "^3.4.5",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "babel-jest": "^29.7.0",
+    "babel-loader": "^9.2.1",
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "postcss": "^8",

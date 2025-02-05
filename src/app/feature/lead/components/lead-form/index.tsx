@@ -69,6 +69,11 @@ export const LeadForm: FC<LeadFormProps> = ({
       firstName: '',
       lastName: '',
       email: '',
+      countryOfCitizenship: '',
+      personalUrl: '',
+      userCV: undefined,
+      visaInterest: [],
+      message: '',
     },
   });
 
@@ -189,7 +194,6 @@ export const LeadForm: FC<LeadFormProps> = ({
               accept=".pdf, .doc, .docx"
               ref={ref}
               onChange={(e) => {
-                // Ensure we're sending the File object to the form
                 if (e.target.files && e.target.files.length > 0) {
                   onChange(e.target.files[0]);
                 }
