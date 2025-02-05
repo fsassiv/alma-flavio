@@ -14,7 +14,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 For auth/signin/
 Username = admin
 Password = admin
-![alt text](image.png)
+![alt text](image-4.png)
 
 ## Tech Choises
 
@@ -27,3 +27,14 @@ Password = admin
 - No State Managemente needed, but Context API would be my choice
 - Typescript and responssiveness applied
 - No unit tests or functionalities, due to timeline
+
+## Flow
+
+HOME
+![HOME](image-1.png)
+LEAD FORM
+![LEAD FORM](image-2.png)
+LEAD DASHBOARD
+![LEAD DASHBOARD](image-3.png)
+SIGN IN
+![SIGN IN](image-4.png)
