@@ -1,21 +1,35 @@
-import { handleRequest } from '@/lib/utils';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
-  const {
-    firstName,
-    lastName,
-    email,
-    countryOfCitizenship,
-    visaInterest,
-    message,
-  } = await req.json();
+  try {
+    if (!req.body) {
+      return new Response(JSON.stringify({ error: 'Missing request body' }), {
+        status: 400,
+      });
+    }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [error, data] = await handleRequest(
-    prisma.lead.create({
+    const body = await req.json();
+
+    if (!body || Object.keys(body).length === 0) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid or empty request body' }),
+        { status: 400 }
+      );
+    }
+
+    const {
+      firstName,
+      lastName,
+      email,
+      countryOfCitizenship,
+      visaInterest,
+      message,
+      personalUrl,
+    } = body;
+
+    const data = await prisma.lead.create({
       data: {
         firstName,
         lastName,
@@ -23,11 +37,23 @@ export async function POST(req: Request) {
         countryOfCitizenship,
         visaInterest,
         message,
+        personalUrl,
       },
-    })
-  );
+    });
 
-  return new Response(JSON.stringify(data), {
+    return new Response(JSON.stringify(data), { status: 201 });
+  } catch (error) {
+    console.error('Prisma error:', error);
+    return new Response(JSON.stringify({ error: 'Failed to save lead' }), {
+      status: 500,
+    });
+  }
+}
+
+export async function GET() {
+  const leads = await prisma.lead.findMany();
+
+  return new Response(JSON.stringify(leads), {
     status: 200,
   });
 }

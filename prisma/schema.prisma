@@ -20,8 +20,10 @@ model Lead {
   lastName             String
   email                String   @unique
   countryOfCitizenship String
+  personalUrl          String
   visaInterest         String
   message              String
+  status               String   @default("PENDING ")
 
   @@map("leads")
 }

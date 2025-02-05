@@ -12,12 +12,19 @@ export const NEXT_AUTH_OPTIONS: NextAuthOptions = {
         },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize() {
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-          return { id: '001', name: '_teste', password: 'teste@123' };
+      async authorize(credentials) {
+        if (!credentials?.username || !credentials?.password) {
+          throw new Error('Missing username or password');
         }
-        return null;
+
+        if (
+          credentials.username === 'admin' &&
+          credentials.password === 'admin'
+        ) {
+          return { id: '1', name: 'Admin', username: credentials.username };
+        }
+
+        throw new Error('Invalid credentials');
       },
     }),
   ],
