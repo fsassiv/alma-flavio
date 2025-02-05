@@ -2,6 +2,7 @@
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn } from 'next-auth/react';
+
 import { useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -41,7 +42,6 @@ export const SignInForm = () => {
   });
 
   const onSubmit = async (credentials: z.infer<typeof formSchema>) => {
-    console.log('first');
     await signIn('credentials', {
       username: credentials.username,
       password: credentials.password,
@@ -52,10 +52,7 @@ export const SignInForm = () => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 mx-auto max-w-[90vw] w-[400px] mt-10 mb-20"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
         <FormField
           control={form.control}
           name="username"

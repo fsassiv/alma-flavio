@@ -64,7 +64,24 @@ export async function POST(req: Request) {
 export async function GET() {
   const leads = await prisma.lead.findMany();
 
-  return new Response(JSON.stringify(leads), {
+  return new Response(JSON.stringify({ leads }), {
+    status: 200,
+  });
+}
+
+export async function PATCH(req: Request) {
+  const { id } = await req.json();
+
+  const lead = await prisma.lead.update({
+    where: {
+      id,
+    },
+    data: {
+      status: 'REACHED_OUT',
+    },
+  });
+
+  return new Response(JSON.stringify(lead), {
     status: 200,
   });
 }
